@@ -1,14 +1,14 @@
 import sys
 import random
-from PyQt6 import uic
+from UI import Ui_Form
 from PyQt6.QtGui import QPainter, QColor
 from PyQt6.QtWidgets import QWidget, QApplication
 
 
-class TestWidget(QWidget):
+class TestWidget(QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.do_paint = False
         self.DrawButton.clicked.connect(self.paint)
 
@@ -16,7 +16,6 @@ class TestWidget(QWidget):
         if self.do_paint:
             qp = QPainter()
             qp.begin(self)
-            qp.setBrush(QColor(255, 255, 0))
             self.draw_ellipse(qp)
             qp.end()
         self.do_paint = False
@@ -27,6 +26,7 @@ class TestWidget(QWidget):
 
     def draw_ellipse(self, qp):
         for i in range(random.randint(1, 100)):
+            qp.setBrush(QColor(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
             wh = random.randint(1, 100)
             qp.drawEllipse(random.randint(1, 1125), random.randint(1, 905), wh, wh)
 
